@@ -1,0 +1,131 @@
+/* 智能图书馆导览机器人 - 主菜单页面样式 */
+
+/* ===== 主菜单页面 ===== */
+.user-info {
+    text-align: center;
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.user-info i {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+#logged-user {
+    display: block;
+    font-size: var(--font-lg);
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.admin-tip {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-sm);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.admin-tip i {
+    margin-right: var(--spacing-xs);
+}
+
+.menu-item-admin {
+    border-color: var(--accent-color);
+    background-color: rgba(255, 140, 66, 0.08);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+}
+
+.menu-item {
+    flex-direction: column;
+    padding: var(--spacing-xl);
+    background-color: var(--light-bg);
+    border: 2px solid var(--medium-gray);
+    height: 140px;
+    transition: all var(--transition-normal) ease;
+    border-radius: var(--border-radius);
+}
+
+.menu-item:hover {
+    border-color: var(--primary-color);
+    background-color: var(--light-gray);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item:active {
+    transform: translateY(-2px);
+}
+
+.menu-item i {
+    font-size: var(--font-xxl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.menu-item span {
+    font-size: var(--font-lg);
+    font-weight: 600;
+    color: #000000;
+}
+
+/* 密码重置弹窗 */
+.password-reset-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: var(--spacing-md);
+}
+
+.password-reset-content {
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.password-reset-content h3 {
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.password-reset-content h3 i {
+    color: var(--primary-color);
+}
+
+.password-reset-tip {
+    font-size: var(--font-sm);
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+.password-reset-msg {
+    font-size: var(--font-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.password-reset-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    justify-content: flex-end;
+}

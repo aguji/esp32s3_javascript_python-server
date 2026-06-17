@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>管理员帮助 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i> <span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i> <span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user-shield"></i> <span id="user-name">管理员</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <div class="admin-container admin-help-page">
+            <h2><i class="fas fa-question-circle"></i> 管理员操作说明</h2>
+            <p class="help-intro">以下为管理员首页各功能说明，便于您快速上手操作。</p>
+
+            <section class="help-section">
+                <h3><i class="fas fa-cog"></i> 进入管理后台</h3>
+                <p>点击后进入完整管理后台。可进行：<strong>按用户检索</strong>（输入学号/姓名查看读者信息、代录借书/还书、重置密码、以该用户身份进入自助端）、<strong>按图书检索</strong>（输入书名查看借阅状态、谁在借、可将图书设为已归还）。页面下方有用户列表与图书列表，可折叠/展开，支持表内滚动查看。</p>
+            </section>
+
+            <section class="help-section">
+                <h3><i class="fas fa-search"></i> 图书检索</h3>
+                <p>与读者端相同的图书检索页面，可按书名、作者、ISBN 检索馆藏，查看可借阅状态与馆藏位置。</p>
+            </section>
+
+            <section class="help-section">
+                <h3><i class="fas fa-map-marked-alt"></i> 导航指引</h3>
+                <p>与读者端相同的导航页面，可查找书籍位置、选择楼层查看导览图。</p>
+            </section>
+
+            <section class="help-section">
+                <h3><i class="fas fa-user"></i> 以用户身份访问</h3>
+                <p>切换到用户端主菜单，以普通读者身份使用自助借还、个人中心等功能，便于体验读者流程。</p>
+            </section>
+
+            <section class="help-section">
+                <h3><i class="fas fa-sign-out-alt"></i> 退出登录</h3>
+                <p>退出当前管理员账号，返回网站首页。再次使用需重新登录。</p>
+            </section>
+
+            <button class="btn-secondary btn-back" onclick="window.location.href='admin-menu.html'">
+                <i class="fas fa-arrow-left"></i> 返回管理员首页
+            </button>
+        </div>
+    </main>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/system.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!AppState.currentUser || AppState.currentUser.role !== 'admin') {
+                window.location.href = '../user/login.html';
+                return;
+            }
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

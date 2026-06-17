@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>管理后台 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i> <span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i> <span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user-shield"></i> <span id="user-name">管理员</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <div class="admin-container">
+            <h2><i class="fas fa-cog"></i> 管理后台</h2>
+
+            <!-- 统计卡片 -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <span class="stat-value" id="stat-users">0</span>
+                    <span class="stat-label">用户总数</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-books"></i>
+                    <span class="stat-value" id="stat-books">0</span>
+                    <span class="stat-label">图书总数</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-book-reader"></i>
+                    <span class="stat-value" id="stat-borrowing">0</span>
+                    <span class="stat-label">当前借阅人数</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-history"></i>
+                    <span class="stat-value" id="stat-total-borrows">0</span>
+                    <span class="stat-label">累计借阅</span>
+                </div>
+            </div>
+
+            <!-- 统一检索：按用户 或 按图书（保留您认可的搜索框） -->
+            <section class="admin-section admin-search-section">
+                <h3><i class="fas fa-search"></i> 用户/图书检索</h3>
+                <div class="search-type-row">
+                    <label class="search-type-option">
+                        <input type="radio" name="search-type" value="user" checked>
+                        <span>按用户</span>
+                    </label>
+                    <label class="search-type-option">
+                        <input type="radio" name="search-type" value="book">
+                        <span>按图书</span>
+                    </label>
+                </div>
+                <p class="section-desc" id="search-desc">输入帐号或姓名查看读者信息并代录借还、或以该身份进入自助端。</p>
+                <div class="query-row">
+                    <input type="text" id="admin-search-input" placeholder="输入帐号/姓名 或 书名" class="admin-search-input">
+                    <button type="button" class="btn-primary" onclick="doSearch()"><i class="fas fa-search"></i> 检索</button>
+                </div>
+            </section>
+
+            <!-- 检索结果：用户 -->
+            <div id="admin-result-user" class="query-result hidden">
+                <div class="query-result-header">
+                    <h4 id="query-user-name"></h4>
+                    <div class="query-result-actions">
+                        <button type="button" class="btn-primary btn-small" onclick="adminRecordBorrowOpen()"><i class="fas fa-book-reader"></i> 代录借书</button>
+                        <button type="button" class="btn-primary btn-small" onclick="adminRecordReturnOpen()"><i class="fas fa-book-return"></i> 代录还书</button>
+                        <button type="button" class="btn-secondary btn-small" onclick="adminResetUserPasswordOpen()"><i class="fas fa-key"></i> 重置密码</button>
+                        <button type="button" class="btn-secondary btn-small" onclick="loginAsUser()"><i class="fas fa-sign-in-alt"></i> 以该用户身份进入</button>
+                    </div>
+                </div>
+                <div class="query-result-body">
+                    <p id="query-user-meta"></p>
+                    <div class="query-result-grid">
+                        <div>
+                            <h5>当前借阅</h5>
+                            <ul id="query-current-borrows"></ul>
+                        </div>
+                        <div>
+                            <h5>借阅历史（最近）</h5>
+                            <ul id="query-borrow-history"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 检索结果：图书 -->
+            <div id="admin-result-book" class="book-result-wrap hidden">
+                <h4>图书检索结果</h4>
+                <div id="admin-book-result-list" class="book-result-list"></div>
+            </div>
+
+            <!-- 用户列表（可折叠，表内滚动） -->
+            <section class="admin-section admin-section-collapsible" id="section-user-list">
+                <h3 class="admin-section-head">
+                    <span><i class="fas fa-user-friends"></i> 用户列表</span>
+                    <span class="list-count" id="user-list-count"></span>
+                    <button type="button" class="admin-toggle-btn" title="折叠/展开" aria-expanded="true"><i class="fas fa-chevron-up"></i></button>
+                </h3>
+                <div class="admin-table-wrap admin-table-scroll">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>卡号</th>
+                                <th>姓名</th>
+                                <th>角色</th>
+                                <th>当前借阅</th>
+                                <th>总借阅</th>
+                                <th>电话</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 图书列表（可折叠，表内滚动） -->
+            <section class="admin-section admin-section-collapsible" id="section-book-list">
+                <h3 class="admin-section-head">
+                    <span><i class="fas fa-book"></i> 图书列表</span>
+                    <span class="list-count" id="book-list-count"></span>
+                    <button type="button" class="admin-toggle-btn" title="折叠/展开" aria-expanded="true"><i class="fas fa-chevron-up"></i></button>
+                </h3>
+                <div class="admin-table-wrap admin-table-scroll">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>书名</th>
+                                <th>作者</th>
+                                <th>ISBN</th>
+                                <th>状态</th>
+                                <th>位置</th>
+                            </tr>
+                        </thead>
+                        <tbody id="book-list-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <button class="btn-secondary btn-back" onclick="window.location.href='admin-menu.html'">
+                <i class="fas fa-arrow-left"></i> 返回管理员首页
+            </button>
+
+            <!-- 代录借书 弹层 -->
+            <div id="modal-record-borrow" class="admin-modal hidden">
+                <div class="admin-modal-content admin-modal-content--wide">
+                    <h4><i class="fas fa-book-reader"></i> 代录借书</h4>
+                    <p class="modal-user" id="modal-borrow-user"></p>
+                    <div class="form-group">
+                        <label>搜索在架图书</label>
+                        <div class="admin-borrow-search-row">
+                            <input type="text" id="modal-borrow-search" class="admin-search-input" placeholder="书名 / ISBN / 作者" autocomplete="off">
+                            <button type="button" class="btn-primary" onclick="adminSearchBorrowBooks()"><i class="fas fa-search"></i> 搜索</button>
+                        </div>
+                        <p class="modal-borrow-hint">仅列出可借（在架）图书；选中一行后再点「确认代录」。</p>
+                        <div id="modal-borrow-results" class="admin-borrow-results" aria-live="polite"></div>
+                        <input type="hidden" id="modal-borrow-book-uid" value="">
+                        <p id="modal-borrow-selected" class="modal-borrow-selected"></p>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="adminRecordBorrowClose()">取消</button>
+                        <button type="button" class="btn-primary" onclick="adminRecordBorrowSubmit()">确认代录</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 代录还书 弹层 -->
+            <div id="modal-record-return" class="admin-modal hidden">
+                <div class="admin-modal-content">
+                    <h4><i class="fas fa-book-return"></i> 代录还书</h4>
+                    <p class="modal-user" id="modal-return-user"></p>
+                    <div class="form-group">
+                        <label>选择要归还的借阅</label>
+                        <select id="modal-return-borrow"></select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="adminRecordReturnClose()">取消</button>
+                        <button type="button" class="btn-primary" onclick="adminRecordReturnSubmit()">确认代录</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 管理员重置用户密码（用户忘记密码时使用） -->
+            <div id="modal-reset-password" class="admin-modal hidden">
+                <div class="admin-modal-content">
+                    <h4><i class="fas fa-key"></i> 重置该用户密码</h4>
+                    <p class="modal-user" id="modal-reset-pwd-user"></p>
+                    <p class="section-desc">将把该读者登录密码重置为默认 <strong>123456</strong>（写入数据库，无需原密码）。</p>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="adminResetUserPasswordClose()">取消</button>
+                        <button type="button" class="btn-primary" onclick="submitAdminResetPasswordToDefault()">确认重置为 123456</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/system.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

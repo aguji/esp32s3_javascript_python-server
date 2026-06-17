@@ -1,0 +1,59 @@
+/* 智能图书馆导览机器人 - 欢迎页面样式 */
+
+/* ===== 欢迎页面 ===== */
+.welcome-container {
+    text-align: center;
+    padding: var(--spacing-xl);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    margin-bottom: var(--spacing-xl);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.logo i {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.logo h1 {
+    font-size: var(--font-xxl);
+    color: var(--primary-color);
+    margin-top: var(--spacing-md);
+}
+
+.welcome-message {
+    margin: var(--spacing-xl) 0;
+    font-size: var(--font-lg);
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+.language-selector {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+.language-selector button {
+    min-width: 100px;
+}

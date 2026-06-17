@@ -1,0 +1,32 @@
+# ESP-IDF build output
+08_lvgl_Porting/build/
+08_lvgl_Porting/sdkconfig
+08_lvgl_Porting/sdkconfig.old
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Archives (binary files, too large for Git)
+*.rar
+*.zip
+*.7z
+
+# Dependencies (managed by ESP-IDF component manager)
+managed_components/

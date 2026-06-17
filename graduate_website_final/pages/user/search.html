@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>图书检索 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status">
+                <i class="fas fa-wifi"></i>
+                <span id="wifi-status-text">已连接</span>
+            </span>
+            <span class="battery-status">
+                <i class="fas fa-battery-full"></i>
+                <span id="battery-level">100%</span>
+            </span>
+        </div>
+        <div class="status-center">
+            <span id="current-time">10:50</span>
+        </div>
+        <div class="status-right">
+            <span class="user-status">
+                <i class="fas fa-user"></i>
+                <span id="user-name">未登录</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="app">
+        <section id="search-page" class="page active">
+            <div class="search-container">
+                <h2><i class="fas fa-search"></i> 图书检索</h2>
+                <p class="search-subtitle">输入书名、作者或ISBN号，快速查找图书馆藏书</p>
+                
+                <div class="search-box">
+                    <div class="search-row">
+                        <div class="search-input-inner">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <input type="text" id="search-input" placeholder="例如：人工智能导论、刘伟、9787302455106" autocomplete="off">
+                        </div>
+                        <button type="button" class="btn-primary search-submit-btn" onclick="performSearch()">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                    </div>
+                    
+                    <div class="search-filters search-filters-single">
+                        <div class="filter-group">
+                            <label for="category-filter"><i class="fas fa-tags"></i> 分类</label>
+                            <select id="category-filter">
+                                <option value="">所有分类</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-results">
+                    <div class="results-header">
+                        <h3><i class="fas fa-list"></i> 搜索结果</h3>
+                        <div class="results-info">
+                            <span id="results-count">0 条结果</span>
+                            <button class="btn-small btn-secondary" onclick="clearSearch()">
+                                <i class="fas fa-times"></i> 清空
+                            </button>
+                        </div>
+                    </div>
+                    <div id="results-list" class="results-list">
+                        <div class="no-results">
+                            <i class="fas fa-book-open fa-4x"></i>
+                            <h4>暂无搜索结果</h4>
+                            <p>请输入关键词搜索图书，或调整筛选条件</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-actions">
+                    <button class="btn-secondary btn-back" onclick="window.location.href=typeof getBackMenuUrl==='function'?getBackMenuUrl():'main-menu.html'">
+                        <i class="fas fa-arrow-left"></i> 返回菜单
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 图书详情弹窗 -->
+    <div id="book-detail-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>图书详情</h3>
+                <button class="modal-close" onclick="closeBookDetail()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="book-detail-content"></div>
+        </div>
+    </div>
+
+    <!-- 通知提示框 -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserStatus();
+            initSearchPage();
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

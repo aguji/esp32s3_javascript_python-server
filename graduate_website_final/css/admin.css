@@ -1,0 +1,551 @@
+/* 智能图书馆导览机器人 - 管理后台样式 */
+
+/* 与 base 一致：max-width 800px，h2/h3 由 base 统一 */
+.admin-container {
+    max-width: 800px;
+}
+
+.admin-container h2 i {
+    color: var(--primary-color);
+}
+
+/* 管理员首页（admin-menu） */
+.admin-menu-container .admin-menu-info {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border-radius: var(--border-radius);
+}
+.admin-menu-container .admin-menu-info p {
+    margin: 0;
+    font-size: var(--font-base);
+    line-height: 1.6;
+    color: var(--dark-text);
+}
+.admin-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+.admin-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-normal) ease;
+    text-align: center;
+}
+.admin-menu-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+.admin-menu-item i { color: var(--primary-color); }
+.admin-menu-item span { font-weight: 600; color: var(--dark-text); }
+.admin-menu-item small {
+    font-size: var(--font-sm);
+    color: var(--dark-gray);
+    font-weight: normal;
+    line-height: 1.4;
+}
+.admin-menu-actions .btn-back { margin-top: var(--spacing-sm); }
+.admin-menu-actions .btn-logout { margin-top: var(--spacing-xs); }
+.admin-menu-actions .btn-help {
+    margin-top: var(--spacing-sm);
+}
+
+/* 管理员帮助页面（独立 help.html） */
+.admin-help-page .help-intro {
+    margin-bottom: var(--spacing-xl);
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+.admin-help-page .help-section {
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border-radius: var(--border-radius);
+    border: 1px solid var(--medium-gray);
+}
+.admin-help-page .help-section h3 {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+.admin-help-page .help-section h3 i {
+    color: var(--primary-color);
+}
+.admin-help-page .help-section p {
+    margin: 0;
+    font-size: var(--font-base);
+    line-height: 1.6;
+    color: var(--dark-text);
+}
+
+/* 统计卡片 */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all var(--transition-normal) ease;
+}
+
+.stat-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+}
+
+.stat-card i {
+    font-size: var(--font-xxl);
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-value {
+    display: block;
+    font-size: var(--font-xl);
+    font-weight: 700;
+    color: var(--dark-text);
+}
+
+.stat-label {
+    font-size: var(--font-base);
+    color: var(--dark-gray);
+}
+
+/* 表格 */
+.admin-table-wrap {
+    overflow-x: auto;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+}
+
+/* 用户/图书列表：固定高度，内部滚动，避免占满整页 */
+.admin-table-scroll {
+    max-height: 280px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-base);
+    line-height: 1.5;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: var(--spacing-md) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.admin-table th {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-table tbody tr:hover {
+    background-color: var(--light-gray);
+}
+
+.admin-table .role-admin {
+    color: var(--danger-color);
+    font-weight: 600;
+}
+
+.admin-table .role-user {
+    color: var(--dark-gray);
+}
+
+.admin-table .status-available {
+    color: var(--secondary-color);
+}
+
+.admin-table .status-borrowed {
+    color: var(--warning-color);
+}
+
+.admin-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.admin-section h3 {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.admin-section h3 i {
+    color: var(--secondary-color);
+}
+
+/* 可折叠列表：标题行可点击折叠/展开 */
+.admin-section-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    user-select: none;
+}
+.admin-section-head .list-count {
+    font-size: var(--font-base);
+    color: var(--dark-gray);
+    font-weight: normal;
+}
+.admin-toggle-btn {
+    margin-left: auto;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: transparent;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    color: var(--dark-gray);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+}
+.admin-toggle-btn:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.admin-section-collapsible.collapsed .admin-table-wrap {
+    display: none;
+}
+.admin-section-collapsible.collapsed .admin-toggle-btn i {
+    transform: rotate(180deg);
+}
+
+.section-desc {
+    font-size: var(--font-base);
+    line-height: 1.6;
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+/* 检索类型：按用户 / 按图书 */
+.search-type-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.search-type-option {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+    font-size: var(--font-base);
+}
+
+.search-type-option input {
+    margin: 0;
+}
+
+.query-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.admin-search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: var(--spacing-md);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    font-size: var(--font-base);
+}
+
+/* 检索结果通用 */
+.query-result {
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    background-color: #fff;
+    margin-top: var(--spacing-md);
+}
+
+.query-result-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.query-result-header h4 {
+    margin: 0;
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.query-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.query-result-body p {
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-base);
+    line-height: 1.5;
+    color: var(--dark-gray);
+}
+
+.query-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+}
+
+.query-result-grid h5 {
+    font-size: var(--font-base);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-text);
+}
+
+.query-result-grid ul {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+    font-size: var(--font-base);
+    line-height: 1.5;
+    color: var(--dark-gray);
+}
+
+.query-result-grid li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* 图书检索结果 */
+.book-result-wrap {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: #fff;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+}
+
+.book-result-wrap h4 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--dark-text);
+}
+
+.book-result-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.book-result-card {
+    padding: var(--spacing-md);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--border-radius);
+    background-color: var(--light-bg);
+}
+
+.book-result-title {
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.book-result-meta {
+    font-size: var(--font-base);
+    line-height: 1.5;
+    color: var(--dark-gray);
+    margin: 0 0 var(--spacing-sm) 0;
+}
+
+.book-borrower {
+    font-size: var(--font-base);
+    color: var(--warning-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.book-result-card .btn-small {
+    margin-top: var(--spacing-xs);
+}
+
+.no-result {
+    color: var(--dark-gray);
+    margin: 0;
+}
+
+/* 弹层 */
+.admin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: var(--spacing-md);
+}
+
+.admin-modal-content {
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xl);
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.admin-modal-content--wide {
+    max-width: min(520px, 100%);
+}
+
+.admin-modal-content h4 {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.modal-user {
+    font-size: var(--font-base);
+    line-height: 1.5;
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    justify-content: flex-end;
+}
+
+.admin-modal select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    font-size: var(--font-base);
+}
+
+.admin-borrow-search-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: stretch;
+    margin-top: var(--spacing-xs);
+}
+
+.admin-borrow-search-row .admin-search-input {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-borrow-search-row .btn-primary {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.modal-borrow-hint {
+    font-size: var(--font-sm);
+    color: var(--dark-gray);
+    margin: var(--spacing-sm) 0 var(--spacing-sm);
+    line-height: 1.4;
+}
+
+.admin-borrow-results {
+    max-height: 220px;
+    overflow-y: auto;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    background: var(--light-gray);
+}
+
+.admin-borrow-results:empty {
+    display: none;
+}
+
+.admin-borrow-pick {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-bottom: 1px solid var(--medium-gray);
+    background: transparent;
+    font-size: var(--font-sm);
+    line-height: 1.4;
+    cursor: pointer;
+    color: var(--dark-text);
+}
+
+.admin-borrow-pick:last-child {
+    border-bottom: none;
+}
+
+.admin-borrow-pick:hover:not(:disabled) {
+    background: rgba(74, 144, 226, 0.12);
+}
+
+.admin-borrow-pick.is-selected {
+    background: rgba(74, 144, 226, 0.22);
+    font-weight: 600;
+}
+
+.admin-borrow-pick:disabled {
+    cursor: not-allowed;
+    color: var(--dark-gray);
+    opacity: 0.75;
+}
+
+.modal-borrow-selected {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-sm);
+    color: var(--primary-color);
+    min-height: 1.4em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+    .admin-table th,
+    .admin-table td {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-sm);
+    }
+    .query-result-grid {
+        grid-template-columns: 1fr;
+    }
+}

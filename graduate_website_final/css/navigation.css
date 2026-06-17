@@ -1,0 +1,196 @@
+/* 智能图书馆导览机器人 - 导航指引页面样式 */
+
+/* ===== 页面整体布局 ===== */
+#navigation-page .navigation-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+}
+
+.navigation-container > h2 {
+    margin-bottom: 0;
+}
+
+/* ===== 楼层选择 ===== */
+.floor-selector {
+    margin: 0;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border-radius: var(--border-radius);
+    border: 2px solid var(--medium-gray);
+}
+
+.floor-selector h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--font-base);
+    color: var(--dark-text);
+}
+
+.floor-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.floor-btn {
+    flex: 1;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-base);
+    background-color: var(--light-bg);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.floor-btn:hover {
+    border-color: var(--primary-color);
+}
+
+.floor-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    border-color: var(--primary-color);
+}
+
+/* ===== 地图区域 ===== */
+.library-map {
+    margin: 0;
+}
+
+.map-container {
+    background-color: white;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.map-legend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* ===== 查找书籍 - 大搜索栏 ===== */
+.navigation-controls {
+    margin: 0;
+}
+
+.search-book-navigation {
+    margin-bottom: 0;
+    padding: var(--spacing-xl);
+    background: linear-gradient(135deg, var(--light-gray), var(--light-bg));
+    border-radius: var(--border-radius);
+    border: 2px solid var(--medium-gray);
+}
+
+.search-book-navigation h3 {
+    margin: 0 0 var(--spacing-lg) 0;
+    font-size: var(--font-lg);
+    color: var(--dark-text);
+}
+
+/* 大号搜索栏 */
+.search-book-navigation .search-input {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.search-input-large {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.search-input-large input {
+    flex: 1;
+    min-width: 200px;
+    padding: 16px 20px;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    transition: border-color 0.2s ease;
+}
+
+.search-input-large input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.search-input-large input::placeholder {
+    color: var(--dark-gray);
+}
+
+.search-input-large .btn-primary,
+.btn-search-large {
+    padding: 16px 28px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    white-space: nowrap;
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.navigation-instructions {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: rgba(255,255,255,0.8);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--medium-gray);
+}
+
+.navigation-instructions h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--font-base);
+    color: var(--dark-text);
+}
+
+.steps-list {
+    margin-top: var(--spacing-md);
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: white;
+    border-radius: var(--border-radius);
+}
+
+.step-number-small {
+    min-width: 24px;
+    height: 24px;
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-weight: bold;
+}

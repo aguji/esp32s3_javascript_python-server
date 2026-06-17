@@ -1,0 +1,279 @@
+/* 智能图书馆导览机器人 - 登录页面样式 */
+
+/* ===== 登录页面 ===== */
+.login-container {
+    text-align: center;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-xl);
+    font-weight: 700;
+}
+
+.login-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+}
+
+.login-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    background-color: var(--light-gray);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    transition: all var(--transition-normal);
+    text-decoration: none;
+    color: inherit;
+    min-height: 120px;
+}
+
+.login-option:hover {
+    border-color: var(--primary-color);
+    background-color: white;
+    transform: translateY(-2px);
+}
+
+.login-option i {
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.login-option span {
+    font-size: var(--font-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: #000000;
+}
+
+.login-option small {
+    color: var(--dark-gray);
+    font-size: var(--font-sm);
+}
+
+#password-login-form,
+#qrcode-container {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.qrcode-display {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+#qrcode {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto var(--spacing-md);
+    background-color: white;
+    border: 2px solid var(--medium-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qrcode-placeholder {
+    font-size: 5rem;
+    color: var(--dark-gray);
+}
+
+.qrcode-tip {
+    font-size: var(--font-sm);
+    color: var(--dark-gray);
+    margin-top: var(--spacing-sm);
+    min-height: 1.2em;
+}
+
+/* ===== 账号密码登录页面优化 ===== */
+.login-single-page {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-height));
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.login-header h2 {
+    font-size: var(--font-xxl);
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.page-tip {
+    color: var(--dark-gray);
+    font-size: var(--font-base);
+    line-height: 1.6;
+}
+
+.password-login-form {
+    margin: var(--spacing-xl) 0;
+    width: 100%;
+}
+
+.password-login-form .form-group {
+    margin-bottom: var(--spacing-xl);
+}
+
+.password-login-form label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-lg);
+    font-weight: 600;
+    color: var(--dark-text);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.label-icon {
+    font-size: var(--font-xl);
+}
+
+.password-login-form input {
+    width: 100%;
+    padding: calc(var(--spacing-md) * 1.2);
+    font-size: var(--font-lg);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    background-color: white;
+    transition: all var(--transition-fast) ease;
+    text-align: center;
+}
+
+.password-login-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.15);
+}
+
+.password-login-form input::placeholder {
+    color: var(--dark-gray);
+    opacity: 0.6;
+}
+
+.error-message {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    background-color: #FFF3F3;
+    border: 2px solid var(--danger-color);
+    border-radius: var(--border-radius);
+    color: var(--danger-color);
+    font-size: var(--font-base);
+    text-align: center;
+}
+
+.error-message.hidden {
+    display: none;
+}
+
+.login-submit-btn {
+    margin-top: var(--spacing-lg);
+    padding: calc(var(--spacing-md) * 1.2);
+    font-size: var(--font-xl);
+    font-weight: 600;
+    min-height: 60px;
+    text-align: center;
+}
+
+.login-submit-btn .btn-text {
+    display: block;
+    text-align: center;
+}
+
+.login-footer {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+}
+
+.login-footer .btn-back {
+    margin-bottom: var(--spacing-md);
+}
+
+.help-text {
+    color: var(--dark-gray);
+    font-size: var(--font-sm);
+    margin-top: var(--spacing-md);
+}
+
+.help-text-admin {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-top: var(--spacing-xs);
+}
+
+/* ===== RFID/扫码 禁用提示框 ===== */
+.rfid-notice-box,
+.qrcode-notice-box {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+    border: 2px solid #ffc107;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.notice-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.notice-title {
+    font-size: var(--font-lg);
+    font-weight: 700;
+    color: #856404;
+    margin-bottom: var(--spacing-md);
+}
+
+.notice-content p {
+    color: #664d03;
+    font-size: var(--font-base);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+}
+
+.notice-content p:last-child {
+    margin-bottom: 0;
+}
+
+.notice-content strong {
+    color: #664d03;
+}
+
+.notice-icon-bottom {
+    font-size: 2rem;
+    margin-top: var(--spacing-md);
+    opacity: 0.7;
+}
+
+.rfid-icon-wrap.rfid-disabled {
+    opacity: 0.3;
+    margin-bottom: var(--spacing-lg);
+}
+
+.qrcode-disabled-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}

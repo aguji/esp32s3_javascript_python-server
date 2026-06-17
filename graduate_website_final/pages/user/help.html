@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>帮助 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/help.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status">
+                <i class="fas fa-wifi"></i>
+                <span id="wifi-status-text">已连接</span>
+            </span>
+            <span class="battery-status">
+                <i class="fas fa-battery-full"></i>
+                <span id="battery-level">100%</span>
+            </span>
+        </div>
+        <div class="status-center">
+            <span id="current-time">10:50</span>
+        </div>
+        <div class="status-right">
+            <span class="user-status">
+                <i class="fas fa-user"></i>
+                <span id="user-name">未登录</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="app">
+        <div class="help-container">
+            <h2><i class="fas fa-question-circle"></i> 帮助与支持</h2>
+            
+            <div class="help-sections">
+                <div class="help-section">
+                    <h3><i class="fas fa-info-circle"></i> 使用指南</h3>
+                    <div class="help-content">
+                        <h4>如何借书？</h4>
+                        <ol>
+                            <li>在主菜单选择"自助借书"</li>
+                            <li>按照屏幕提示刷卡识别身份</li>
+                            <li>扫描书籍条形码</li>
+                            <li>确认借阅信息</li>
+                        </ol>
+                        
+                        <h4>如何还书？</h4>
+                        <ol>
+                            <li>在主菜单选择"自助还书"</li>
+                            <li>扫描书籍条形码</li>
+                            <li>将书籍放入还书口</li>
+                            <li>等待系统确认</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <h3><i class="fas fa-phone-alt"></i> 联系我们</h3>
+                    <div class="help-content">
+                        <p><i class="fas fa-phone"></i> 服务热线: 1234-5678</p>
+                        <p><i class="fas fa-envelope"></i> 邮箱: library@university.edu</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 地址: 图书馆一楼服务台</p>
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <h3><i class="fas fa-cog"></i> 系统设置</h3>
+                    <div class="help-content">
+                        <div class="setting-item">
+                            <span>字体大小</span>
+                            <div class="font-size-controls">
+                                <button class="btn-small" onclick="changeFontSize('small')">小</button>
+                                <button class="btn-small active" onclick="changeFontSize('medium')">中</button>
+                                <button class="btn-small" onclick="changeFontSize('large')">大</button>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <span>语音提示</span>
+                            <label class="switch">
+                                <input type="checkbox" id="voice-guide" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <span>高对比度模式</span>
+                            <label class="switch">
+                                <input type="checkbox" id="high-contrast">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-secondary btn-back" onclick="window.location.href='main-menu.html'">
+                <i class="fas fa-arrow-left"></i> 返回菜单
+            </button>
+        </div>
+    </main>
+
+    <!-- 模块化JavaScript文件 -->
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script>
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新用户状态显示
+            updateUserStatus();
+            
+            // 初始化时间显示
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

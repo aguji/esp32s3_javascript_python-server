@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>自助借书 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/borrow.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status">
+                <i class="fas fa-wifi"></i>
+                <span id="wifi-status-text">已连接</span>
+            </span>
+            <span class="battery-status">
+                <i class="fas fa-battery-full"></i>
+                <span id="battery-level">100%</span>
+            </span>
+        </div>
+        <div class="status-center">
+            <span id="current-time">10:50</span>
+        </div>
+        <div class="status-right">
+            <span class="user-status">
+                <i class="fas fa-user"></i>
+                <span id="user-name">未登录</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="app">
+        <!-- 自助借书页面 -->
+        <section id="borrow-page" class="page active">
+            <div class="borrow-container">
+                <h2><i class="fas fa-book-reader"></i> 自助借书</h2>
+                
+                <div class="borrow-steps">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>刷卡识别</h3>
+                            <p>请将校园卡靠近读卡器</p>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="scanRFID()">
+                                    <i class="fas fa-id-card"></i> 开始识别
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>扫描书籍</h3>
+                            <p>请将书籍条形码对准摄像头</p>
+                            <div class="camera-preview">
+                                <div class="camera-placeholder">
+                                    <i class="fas fa-camera fa-3x"></i>
+                                    <p>摄像头预览</p>
+                                </div>
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="startBarcodeScan()">
+                                    <i class="fas fa-barcode"></i> 开始扫描
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>确认借阅</h3>
+                            <div id="book-info" class="book-info">
+                                <!-- 书籍信息将动态显示 -->
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="confirmBorrow()">
+                                    <i class="fas fa-check"></i> 确认借阅
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="borrow-status">
+                    <h3>借阅状态</h3>
+                    <div id="borrow-status-message" class="status-message">
+                        请按照步骤完成借书流程
+                    </div>
+                </div>
+                
+                <button class="btn-secondary btn-back" onclick="window.location.href='main-menu.html'">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 通知提示框 -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <!-- 模块化JavaScript文件 -->
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script src="../../js/borrow.js"></script>
+    <script>
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新用户状态显示
+            updateUserStatus();
+            
+            // 初始化时间显示
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

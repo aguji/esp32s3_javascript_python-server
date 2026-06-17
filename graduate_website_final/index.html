@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/welcome.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/borrow.css">
+    <link rel="stylesheet" href="css/return.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/help.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status">
+                <i class="fas fa-wifi"></i>
+                <span id="wifi-status-text">已连接</span>
+            </span>
+            <span class="battery-status">
+                <i class="fas fa-battery-full"></i>
+                <span id="battery-level">100%</span>
+            </span>
+        </div>
+        <div class="status-center">
+            <span id="current-time">10:50</span>
+        </div>
+        <div class="status-right">
+            <span class="user-status">
+                <i class="fas fa-user"></i>
+                <span id="user-name">未登录</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="app">
+        <!-- 欢迎页面 -->
+        <section id="welcome-page" class="page active">
+            <div class="welcome-container">
+                <div class="logo">
+                    <i class="fas fa-robot fa-5x"></i>
+                    <h1>智能图书馆导览机器人</h1>
+                </div>
+                <div class="welcome-message">
+                    <p>欢迎使用智能图书馆导览系统</p>
+                    <p>为您提供便捷的图书检索、借还、导览服务</p>
+                </div>
+                <button class="btn-primary btn-large" onclick="window.location.href='pages/user/login.html'">
+                    <i class="fas fa-sign-in-alt"></i>
+                    登录使用
+                </button>
+                <div class="guest-options">
+                    <button class="btn-secondary btn-medium" onclick="showPage('navigation-page')">
+                        <i class="fas fa-map-marked-alt"></i>
+                        查看图书馆布局
+                    </button>
+                    <button class="btn-secondary btn-medium" onclick="showPage('search-page')">
+                        <i class="fas fa-search"></i>
+                        搜索图书位置
+                    </button>
+                </div>
+                <div class="language-selector">
+                    <button class="btn-secondary btn-small" onclick="changeLanguage('zh')">中文</button>
+                    <button class="btn-secondary btn-small" onclick="changeLanguage('en')">English</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 主菜单页面 -->
+        <section id="main-menu" class="page">
+            <div class="menu-container">
+                <h2><i class="fas fa-bars"></i> 主菜单</h2>
+                <div class="user-info">
+                    <i class="fas fa-user-circle fa-3x"></i>
+                    <span id="logged-user">欢迎您！</span>
+                </div>
+                
+                <div class="menu-grid">
+                    <button class="menu-item" onclick="showPage('search-page')">
+                        <i class="fas fa-search fa-2x"></i>
+                        <span>图书检索</span>
+                    </button>
+                    
+                    <button class="menu-item" onclick="showPage('borrow-page')">
+                        <i class="fas fa-book-reader fa-2x"></i>
+                        <span>自助借书</span>
+                    </button>
+                    
+                    <button class="menu-item" onclick="showPage('return-page')">
+                        <i class="fas fa-book-return fa-2x"></i>
+                        <span>自助还书</span>
+                    </button>
+                    
+                    <button class="menu-item" onclick="showPage('profile-page')">
+                        <i class="fas fa-user-circle fa-2x"></i>
+                        <span>个人中心</span>
+                    </button>
+                    
+                    <button class="menu-item" onclick="showPage('navigation-page')">
+                        <i class="fas fa-map-marked-alt fa-2x"></i>
+                        <span>导航指引</span>
+                    </button>
+                    
+                    <button class="menu-item" onclick="showPage('help-page')">
+                        <i class="fas fa-question-circle fa-2x"></i>
+                        <span>帮助</span>
+                    </button>
+                    
+                    <button class="menu-item" id="admin-menu-btn-index" onclick="window.location.href='pages/admin/admin.html'" style="display: none;">
+                        <i class="fas fa-cog fa-2x"></i>
+                        <span>管理后台</span>
+                    </button>
+                </div>
+                
+                <button class="btn-secondary btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </button>
+            </div>
+        </section>
+
+        <!-- 图书检索页面 -->
+        <section id="search-page" class="page">
+            <div class="search-container">
+                <h2><i class="fas fa-search"></i> 图书检索</h2>
+                <p class="search-subtitle">输入书名、作者或ISBN号，快速查找图书馆藏书</p>
+                
+                <div class="search-box">
+                    <div class="search-row">
+                        <div class="search-input-inner">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <input type="text" id="search-input" placeholder="例如：人工智能导论、刘伟、9787302455106" autocomplete="off">
+                        </div>
+                        <button type="button" class="btn-primary search-submit-btn" onclick="performSearch()">
+                            <i class="fas fa-search"></i> 搜索
+                        </button>
+                    </div>
+                    
+                    <div class="search-filters search-filters-single">
+                        <div class="filter-group">
+                            <label for="category-filter"><i class="fas fa-tags"></i> 分类</label>
+                            <select id="category-filter">
+                                <option value="">所有分类</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-results">
+                    <div class="results-header">
+                        <h3><i class="fas fa-list"></i> 搜索结果</h3>
+                        <div class="results-info">
+                            <span id="results-count">0 条结果</span>
+                            <button class="btn-small btn-secondary" onclick="clearSearch()">
+                                <i class="fas fa-times"></i> 清空
+                            </button>
+                        </div>
+                    </div>
+                    <div id="results-list" class="results-list">
+                        <div class="no-results">
+                            <i class="fas fa-book-open fa-4x"></i>
+                            <h4>暂无搜索结果</h4>
+                            <p>请输入关键词搜索图书，或调整筛选条件</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="search-actions">
+                    <button class="btn-secondary btn-back" onclick="goBackToWelcomeOrMenu()">
+                        <i class="fas fa-arrow-left"></i> 返回菜单
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 图书详情弹窗 -->
+        <div id="book-detail-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>图书详情</h3>
+                    <button class="modal-close" onclick="closeBookDetail()"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body" id="book-detail-content"></div>
+            </div>
+        </div>
+
+        <!-- 自助借书页面 -->
+        <section id="borrow-page" class="page">
+            <div class="borrow-container">
+                <h2><i class="fas fa-book-reader"></i> 自助借书</h2>
+                
+                <div class="borrow-steps">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>扫描书籍</h3>
+                            <p>请将书籍条形码对准摄像头进行扫描</p>
+                            <div class="camera-preview">
+                                <div class="camera-placeholder" id="camera-placeholder">
+                                    <span style="font-size: 3rem;">📷</span>
+                                    <p>摄像头预览</p>
+                                </div>
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="startBarcodeScan()">
+                                    <span style="font-size: 1.2em;">📷</span> 开始扫描
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>确认借阅</h3>
+                            <div id="book-info" class="book-info">
+                                <!-- 书籍信息将动态显示 -->
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="confirmBorrow()">
+                                    <span style="font-size: 1.2em;">✓</span> 确认借阅
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="borrow-status">
+                    <h3>借阅状态</h3>
+                    <div id="borrow-status-message" class="status-message">
+                        请按照步骤完成借书流程
+                    </div>
+                </div>
+                
+                <button class="btn-secondary btn-back" onclick="goBackToWelcomeOrMenu()">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+
+        <!-- 自助还书页面 -->
+        <section id="return-page" class="page">
+            <div class="return-container">
+                <h2><i class="fas fa-book-return"></i> 自助还书</h2>
+                
+                <div class="return-steps">
+                    <div class="step active" id="return-step1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>扫描书籍</h3>
+                            <p>请将书籍条形码对准摄像头</p>
+                            <div class="camera-preview">
+                                <div class="camera-placeholder">
+                                    <i class="fas fa-camera fa-3x"></i>
+                                    <p>摄像头预览</p>
+                                </div>
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="startReturnScan()">
+                                    <i class="fas fa-barcode"></i> 开始扫描
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="return-step2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>放入还书口</h3>
+                            <p>请将书籍放入还书口</p>
+                            <div class="return-slot">
+                                <i class="fas fa-inbox fa-3x"></i>
+                                <p>还书口</p>
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="detectBookReturn()">
+                                    <i class="fas fa-check"></i> 检测书籍
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="return-step3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>还书完成</h3>
+                            <div id="return-book-info" class="book-info">
+                                <!-- 还书信息将动态显示 -->
+                            </div>
+                            <div class="step-action">
+                                <button class="btn-primary" onclick="completeReturn()">
+                                    <i class="fas fa-check-circle"></i> 完成还书
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="return-status">
+                    <h3>还书状态</h3>
+                    <div id="return-status-message" class="status-message">
+                        请按照步骤完成还书流程
+                    </div>
+                </div>
+                
+                <button class="btn-secondary btn-back" onclick="showPage('main-menu')">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+
+        <!-- 个人中心页面 -->
+        <section id="profile-page" class="page">
+            <div class="profile-container">
+                <h2 class="profile-title">个人中心</h2>
+
+                <div class="user-profile">
+                    <div class="avatar">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="profile-name">--</h3>
+                        <p id="profile-card">卡号: --</p>
+                        <p id="profile-phone">电话: --</p>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-book"></i>
+                        <span class="stat-label">当前借阅</span>
+                        <span class="stat-value" id="current-borrows">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-history"></i>
+                        <span class="stat-label">历史借阅</span>
+                        <span class="stat-value" id="total-borrows">-</span>
+                    </div>
+                </div>
+
+                <div class="borrowed-books">
+                    <h3 class="section-title">当前借阅书籍</h3>
+                    <div id="borrowed-books-list" class="books-list">
+                        <div class="no-results">
+                            <i class="fas fa-book-open fa-3x"></i>
+                            <p>暂无借阅书籍</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn-secondary" onclick="showBorrowHistory()">
+                        <i class="fas fa-history"></i> 借阅历史
+                    </button>
+                    <button class="btn-secondary" onclick="showSettings()">
+                        <i class="fas fa-cog"></i> 设置
+                    </button>
+                </div>
+
+                <button class="btn-secondary btn-back" onclick="showPage('main-menu')">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+
+        <!-- 借阅历史页面 -->
+        <section id="borrow-history-page" class="page">
+            <div class="profile-container">
+                <h2 class="profile-title">借阅历史</h2>
+                <div class="borrowed-books">
+                    <div id="borrow-history-list" class="books-list">
+                        <div class="no-results">
+                            <i class="fas fa-history fa-3x"></i>
+                            <p>暂无借阅历史</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary btn-back" onclick="showPage('profile-page')">
+                    <i class="fas fa-arrow-left"></i> 返回个人中心
+                </button>
+            </div>
+        </section>
+
+        <!-- 导航指引页面 -->
+        <section id="navigation-page" class="page">
+            <div class="navigation-container">
+                <h2><i class="fas fa-map-marked-alt"></i> 图书馆导览地图</h2>
+                
+                <div class="floor-selector">
+                    <h3>选择楼层</h3>
+                    <div class="floor-buttons">
+                        <button class="floor-btn active" data-floor="1">一楼</button>
+                        <button class="floor-btn" data-floor="2">二楼</button>
+                        <button class="floor-btn" data-floor="3">三楼</button>
+                        <button class="floor-btn" data-floor="4">四楼</button>
+                    </div>
+                </div>
+                
+                <div class="library-map">
+                    <div class="map-container">
+                        <svg width="100%" height="300" viewBox="0 0 800 300" id="library-map-svg">
+                            <rect width="800" height="300" fill="#f5f5f5"></rect>
+                            <text x="400" y="150" text-anchor="middle" font-size="24" fill="#666">
+                                图书馆地图
+                            </text>
+                        </svg>
+                    </div>
+                    
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #FF9800;"></div>
+                            <span>书架区域</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-secondary btn-back" onclick="goBackToWelcomeOrMenu()">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+
+        <!-- 帮助页面 -->
+        <section id="help-page" class="page">
+            <div class="help-container">
+                <h2><i class="fas fa-question-circle"></i> 帮助与支持</h2>
+                
+                <div class="help-sections">
+                    <div class="help-section">
+                        <h3><i class="fas fa-info-circle"></i> 使用指南</h3>
+                        <div class="help-content">
+                            <h4>如何借书？</h4>
+                            <ol>
+                                <li>在主菜单选择"自助借书"</li>
+                                <li>按照屏幕提示刷卡识别身份</li>
+                                <li>扫描书籍条形码</li>
+                                <li>确认借阅信息</li>
+                            </ol>
+                            
+                            <h4>如何还书？</h4>
+                            <ol>
+                                <li>在主菜单选择"自助还书"</li>
+                                <li>扫描书籍条形码</li>
+                                <li>将书籍放入还书口</li>
+                                <li>等待系统确认</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3><i class="fas fa-phone-alt"></i> 联系我们</h3>
+                        <div class="help-content">
+                            <p><i class="fas fa-phone"></i> 服务热线: 1234-5678</p>
+                            <p><i class="fas fa-envelope"></i> 邮箱: library@university.edu</p>
+                            <p><i class="fas fa-map-marker-alt"></i> 地址: 图书馆一楼服务台</p>
+                        </div>
+                    </div>
+                    
+                    <div class="help-section">
+                        <h3><i class="fas fa-cog"></i> 系统设置</h3>
+                        <div class="help-content">
+                            <div class="setting-item">
+                                <span>字体大小</span>
+                                <div class="font-size-controls">
+                                    <button class="btn-small" onclick="changeFontSize('small')">小</button>
+                                    <button class="btn-small active" onclick="changeFontSize('medium')">中</button>
+                                    <button class="btn-small" onclick="changeFontSize('large')">大</button>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span>语音提示</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="voice-guide" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="setting-item">
+                                <span>高对比度模式</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="high-contrast">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-secondary btn-back" onclick="goBackToWelcomeOrMenu()">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 通知提示框 -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <!-- 模块化JavaScript文件 -->
+    <script src="js/app-state.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/page-manager.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/borrow.js"></script>
+    <script src="js/return.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/help.js"></script>
+    <script src="js/system.js"></script>
+    <script src="js/features.js"></script>
+    <script src="js/main.js"></script>
+    <!-- 首页回退保护：在首页时按浏览器后退仍停留在首页，避免退到他人已登录页面 -->
+    <script>
+    (function() {
+        function isHomePage() {
+            var p = (window.location.pathname || '').replace(/\/$/, '');
+            return p === '' || p.endsWith('index.html');
+        }
+        if (!isHomePage()) return;
+        try {
+            window.history.replaceState({ isHome: true }, '', window.location.href);
+            window.history.pushState({ isHome: true }, '', window.location.href);
+            window.addEventListener('popstate', function() {
+                if (isHomePage()) window.history.pushState({ isHome: true }, '', window.location.href);
+            });
+        } catch (e) {}
+    })();
+    </script>
+</body>
+</html>

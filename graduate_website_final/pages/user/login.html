@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>登录 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i> <span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i> <span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user"></i> <span id="user-name">未登录</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <div class="login-container">
+            <h2><i class="fas fa-key"></i> 登录方式</h2>
+            <div class="login-options">
+                <a href="login-rfid.html" class="login-option btn-large">
+                    <i class="fas fa-id-card fa-3x"></i>
+                    <span>RFID刷卡登录</span>
+                    <small>请将校园卡靠近读卡器</small>
+                </a>
+                <a href="login-qrcode.html" class="login-option btn-large">
+                    <i class="fas fa-qrcode fa-3x"></i>
+                    <span>扫码登录</span>
+                    <small>使用手机APP扫描二维码</small>
+                </a>
+                <a href="password-login.html" class="login-option btn-large">
+                    <i class="fas fa-user-lock fa-3x"></i>
+                    <span>账号密码登录</span>
+                    <small>输入账号和密码</small>
+                </a>
+            </div>
+            <button class="btn-secondary btn-back" onclick="window.location.href='../../index.html'">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </button>
+        </div>
+    </main>
+
+    <script src="../../js/app-state.js"></script>
+    <script>
+        (function() {
+            var now = new Date();
+            var el = document.getElementById('current-time');
+            if (el) el.textContent = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
+        })();
+    </script>
+</body>
+</html>

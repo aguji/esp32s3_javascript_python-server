@@ -1,0 +1,2 @@
+产品资料：
+www.waveshare.net/wiki/ESP32-S3-Touch-LCD-7B

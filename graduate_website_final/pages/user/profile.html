@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人中心 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i><span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i><span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user"></i><span id="user-name">未登录</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <section id="profile-page" class="page active">
+            <div class="profile-container">
+                <h2><i class="fas fa-user-circle"></i> 个人中心</h2>
+
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle fa-5x"></i>
+                    </div>
+                    <div class="user-details">
+                        <h3 id="profile-name">--</h3>
+                        <p id="profile-card">卡号: --</p>
+                        <p id="profile-phone">电话: --</p>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-book"></i>
+                        <span class="stat-label">当前借阅</span>
+                        <span class="stat-value" id="current-borrows">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-history"></i>
+                        <span class="stat-label">历史借阅</span>
+                        <span class="stat-value" id="total-borrows">-</span>
+                    </div>
+                </div>
+
+                <div class="borrowed-books">
+                    <h3><i class="fas fa-list"></i> 当前借阅书籍</h3>
+                    <div id="borrowed-books-list" class="books-list">
+                        <div class="no-results">
+                            <i class="fas fa-book-open fa-3x"></i>
+                            <p>暂无借阅书籍</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn-secondary" onclick="showBorrowHistory()">
+                        <i class="fas fa-history"></i> 借阅历史
+                    </button>
+                    <button class="btn-secondary" onclick="showSettings()">
+                        <i class="fas fa-cog"></i> 设置
+                    </button>
+                </div>
+
+                <button class="btn-secondary btn-back" onclick="window.location.href=typeof getBackMenuUrl==='function'?getBackMenuUrl():'main-menu.html'">
+                    <i class="fas fa-arrow-left"></i> 返回菜单
+                </button>
+            </div>
+        </section>
+
+        <section id="borrow-history-page" class="page">
+            <div class="profile-container">
+                <h2><i class="fas fa-history"></i> 借阅历史</h2>
+                <div class="borrowed-books">
+                    <div id="borrow-history-list" class="books-list">
+                        <div class="no-results">
+                            <i class="fas fa-history fa-3x"></i>
+                            <p>暂无借阅历史</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary btn-back" onclick="showPage('profile-page')">
+                    <i class="fas fa-arrow-left"></i> 返回个人中心
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/page-manager.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserStatus();
+            initProfilePage();
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>主菜单 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/menu.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status">
+                <i class="fas fa-wifi"></i>
+                <span id="wifi-status-text">已连接</span>
+            </span>
+            <span class="battery-status">
+                <i class="fas fa-battery-full"></i>
+                <span id="battery-level">100%</span>
+            </span>
+        </div>
+        <div class="status-center">
+            <span id="current-time">10:50</span>
+        </div>
+        <div class="status-right">
+            <span class="user-status">
+                <i class="fas fa-user"></i>
+                <span id="user-name">未登录</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main id="app">
+        <div class="menu-container">
+            <h2><i class="fas fa-bars"></i> 主菜单</h2>
+            <div class="user-info">
+                <i class="fas fa-user-circle fa-3x"></i>
+                <span id="logged-user">欢迎您！</span>
+                <p id="admin-tip" class="admin-tip" style="display: none;"><i class="fas fa-cog"></i> 您已以管理员身份登录，请点击下方「管理后台」进入</p>
+            </div>
+            
+            <div class="menu-grid">
+                <button class="menu-item" onclick="window.location.href='search.html'">
+                    <i class="fas fa-search fa-2x"></i>
+                    <span>图书检索</span>
+                </button>
+                
+                <button class="menu-item" onclick="window.location.href='self-service.html'">
+                    <i class="fas fa-exchange-alt fa-2x"></i>
+                    <span>自助借还</span>
+                </button>
+                
+                <button class="menu-item" onclick="window.location.href='profile.html'">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                    <span>个人中心</span>
+                </button>
+                
+                <button class="menu-item" onclick="window.location.href='navigation.html'">
+                    <i class="fas fa-map-marked-alt fa-2x"></i>
+                    <span>导航指引</span>
+                </button>
+                
+                <button class="menu-item" onclick="window.location.href='help.html'">
+                    <i class="fas fa-question-circle fa-2x"></i>
+                    <span>帮助</span>
+                </button>
+                
+                <button class="menu-item menu-item-admin" id="admin-menu-btn" onclick="window.location.href='../admin/admin.html'" style="display: none;">
+                    <i class="fas fa-cog fa-2x"></i>
+                    <span>管理后台</span>
+                </button>
+            </div>
+            
+            <button class="btn-secondary" onclick="openPasswordResetModal()">
+                <i class="fas fa-key"></i> 密码重置
+            </button>
+            <button class="btn-secondary btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> 退出登录
+            </button>
+        </div>
+    </main>
+
+    <!-- 密码重置弹窗 -->
+    <div id="password-reset-modal" class="password-reset-modal hidden">
+        <div class="password-reset-content">
+            <h3><i class="fas fa-key"></i> 密码重置</h3>
+            <p class="password-reset-tip">请输入当前密码和新密码</p>
+            <form id="password-reset-form" onsubmit="return submitPasswordReset(event)">
+                <div class="form-group">
+                    <label for="reset-current-pwd">当前密码</label>
+                    <input type="password" id="reset-current-pwd" placeholder="当前密码" required>
+                </div>
+                <div class="form-group">
+                    <label for="reset-new-pwd">新密码</label>
+                    <input type="password" id="reset-new-pwd" placeholder="新密码" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="reset-confirm-pwd">确认新密码</label>
+                    <input type="password" id="reset-confirm-pwd" placeholder="再次输入新密码" required>
+                </div>
+                <p id="password-reset-msg" class="password-reset-msg hidden"></p>
+                <div class="password-reset-actions">
+                    <button type="button" class="btn-secondary" onclick="closePasswordResetModal()">取消</button>
+                    <button type="submit" class="btn-primary">确认重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 通知（若页面需要） -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notification-message"></span>
+        </div>
+    </div>
+
+    <!-- 模块化JavaScript文件 -->
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script>
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新用户状态显示
+            updateUserStatus();
+            // 仅管理员显示「管理后台」入口及提示
+            var adminBtn = document.getElementById('admin-menu-btn');
+            var adminTip = document.getElementById('admin-tip');
+            if (typeof isAdmin === 'function' && isAdmin()) {
+                if (adminBtn) adminBtn.style.display = '';
+                if (adminTip) adminTip.style.display = 'block';
+            }
+            
+            // 如果用户未登录，跳转到首页
+            if (!localStorage.getItem('isLoggedIn') || localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = '../../index.html';
+            }
+            
+            // 初始化时间显示
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+
+        // 覆盖logout函数，适应多页面应用
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            showNotification('已退出登录', 'info');
+            window.location.href = '../../index.html';
+        }
+
+        // 密码重置弹窗
+        function openPasswordResetModal() {
+            document.getElementById('password-reset-modal').classList.remove('hidden');
+            document.getElementById('password-reset-form').reset();
+            document.getElementById('password-reset-msg').classList.add('hidden');
+        }
+        function closePasswordResetModal() {
+            document.getElementById('password-reset-modal').classList.add('hidden');
+        }
+        function submitPasswordReset(e) {
+            e.preventDefault();
+            var current = document.getElementById('reset-current-pwd').value.trim();
+            var newPwd = document.getElementById('reset-new-pwd').value.trim();
+            var confirmPwd = document.getElementById('reset-confirm-pwd').value.trim();
+            var msgEl = document.getElementById('password-reset-msg');
+            msgEl.classList.add('hidden');
+
+            if (!AppState.currentUser) {
+                msgEl.textContent = '请先登录';
+                msgEl.classList.remove('hidden');
+                return false;
+            }
+            if (AppState.currentUser.password !== current) {
+                msgEl.textContent = '当前密码错误';
+                msgEl.style.color = 'var(--danger-color)';
+                msgEl.classList.remove('hidden');
+                return false;
+            }
+            if (newPwd.length < 6) {
+                msgEl.textContent = '新密码至少 6 位';
+                msgEl.style.color = 'var(--danger-color)';
+                msgEl.classList.remove('hidden');
+                return false;
+            }
+            if (newPwd !== confirmPwd) {
+                msgEl.textContent = '两次输入的新密码不一致';
+                msgEl.style.color = 'var(--danger-color)';
+                msgEl.classList.remove('hidden');
+                return false;
+            }
+
+            var user = AppState.mockUsers.find(function(u) { return u.id === AppState.currentUser.id; });
+            if (user) {
+                user.password = newPwd;
+                try {
+                    localStorage.setItem('library_mockUsers', JSON.stringify(AppState.mockUsers));
+                } catch (err) {}
+            }
+            AppState.currentUser.password = newPwd;
+            localStorage.setItem('currentUser', JSON.stringify(AppState.currentUser));
+
+            msgEl.textContent = '密码已重置，请使用新密码登录';
+            msgEl.style.color = 'var(--secondary-color)';
+            msgEl.classList.remove('hidden');
+            setTimeout(function() {
+                closePasswordResetModal();
+                if (typeof showNotification === 'function') showNotification('密码已重置', 'success');
+            }, 1500);
+            return false;
+        }
+    </script>
+</body>
+</html>

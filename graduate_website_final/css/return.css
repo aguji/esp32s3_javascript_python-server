@@ -1,0 +1,87 @@
+/* 智能图书馆导览机器人 - 还书页面样式 */
+/* 注意：还书页面与借书页面共享样式，因此此文件与borrow.css相同 */
+
+/* ===== 借书/还书页面通用样式 ===== */
+.borrow-steps,
+.return-steps {
+    margin: var(--spacing-lg) 0;
+}
+
+.step {
+    display: none;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    background-color: var(--light-bg);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+}
+
+.step.active {
+    display: block;
+    border-color: var(--primary-color);
+}
+
+.step-number {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: bold;
+    margin-bottom: var(--spacing-md);
+}
+
+.step-content h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.step-content p {
+    color: var(--dark-text);
+}
+
+.camera-preview,
+.return-slot {
+    width: 100%;
+    height: 200px;
+    background-color: var(--light-gray);
+    border: 2px dashed var(--medium-gray);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.camera-preview i,
+.return-slot i {
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-sm);
+}
+
+.book-info {
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+    margin: var(--spacing-md) 0;
+}
+
+.borrow-status,
+.return-status {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.status-message {
+    padding: var(--spacing-md);
+    background-color: white;
+    border-radius: var(--border-radius);
+    margin-top: var(--spacing-sm);
+    border-left: 4px solid var(--primary-color);
+}

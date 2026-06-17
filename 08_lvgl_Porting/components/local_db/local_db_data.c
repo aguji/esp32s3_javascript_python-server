@@ -1,0 +1,105 @@
+/**
+ * @file local_db_data.c
+ * @brief 本地白名单数据库示例数据
+ *
+ * 数据来源�?mysql_gradata.md 中的 MySQL 数据
+ */
+#include "local_db.h"
+
+/* ========== 读者数据（�?mysql_gradata.md 一致）========== */
+/* 最终状态：3 条读者记录（admin002, 20240001, 20240002�?/
+const local_db_reader_t g_readers[LOCAL_DB_MAX_READERS] = {
+    /* id=1: 管理�?*/
+    {
+        .id = 1,
+        .card_number = "admin002",
+        .password = "YOUR_PASSWORD",
+        .name = "Library Admin",
+        .rfid_uid = "04FF5A06",
+        .phone = "",
+        .status = READER_STATUS_ACTIVE,
+        .is_admin = 1,
+        .created_year = 2024,
+        .created_month = 1,
+        .created_day = 1
+    },
+    // /* id=2: 普通读�?*/
+    // {
+    //     .id = 2,
+    //     .card_number = "20240001",
+    //     .password = "123456",
+    //     .name = "John Smith",
+    //     .rfid_uid = "673DC806",
+    //     .phone = "",
+    //     .status = READER_STATUS_ACTIVE,
+    //     .is_admin = 0,
+    //     .created_year = 2024,
+    //     .created_month = 1,
+    //     .created_day = 1
+    // },
+    // /* id=3: 普通读�?*/
+    // {
+    //     .id = 3,
+    //     .card_number = "20240002",
+    //     .password = "123456",
+    //     .name = "Jane Doe",
+    //     .rfid_uid = "E730C806",
+    //     .phone = "",
+    //     .status = READER_STATUS_ACTIVE,
+    //     .is_admin = 0,
+    //     .created_year = 2024,
+    //     .created_month = 1,
+    //     .created_day = 1
+    // },
+};
+
+const int g_reader_count = 1;
+
+/* ========== 图书数据（与 mysql_gradata.md 一致）========== */
+/* 最终状态：3 条图书记�?*/
+const local_db_book_t g_books[LOCAL_DB_MAX_BOOKS] = {
+    /* id=1: C 编程语言 */
+    // {
+    //     .id = 1,
+    //     .isbn = "978-0-13-110362-7",
+    //     .title = "The C Programming Language",
+    //     .author = "Brian Kernighan, Dennis Ritchie",
+    //     .publisher = "Prentice Hall",
+    //     .location = "Section A-3F-05",
+    //     .rfid_uid = "A1B2C3D4E5",
+    //     .status = BOOK_STATUS_AVAILABLE,
+    //     .created_year = 2024,
+    //     .created_month = 1,
+    //     .created_day = 1
+    // },
+    // /* id=2: Python 速成教程 */
+    {
+        .id = 2,
+        .isbn = "978-1-59327-599-0",
+        .title = "Python Crash Course",
+        .author = "Eric Matthes",
+        .publisher = "No Starch Press",
+        .location = "Section B-2F-10",
+        .rfid_uid = "4AD1395E",
+        .status = BOOK_STATUS_AVAILABLE,
+        .created_year = 2024,
+        .created_month = 1,
+        .created_day = 1
+    },
+    /* id=3: 测试图书（RFID UID �?83EA9A34�?*/
+    {
+        .id = 3,
+        .isbn = "978-7-121-12345-6",
+        .title = "Test Book for RFID 83EA9A34",
+        .author = "Tester",
+        .publisher = "Test Press",
+        .location = "Section Z-9F-99",
+        .rfid_uid = "83EA9A34",
+        .status = BOOK_STATUS_AVAILABLE,
+        .created_year = 2024,
+        .created_month = 1,
+        .created_day = 1
+    },
+};
+
+const int g_book_count = 2;

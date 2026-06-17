@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>管理员首页 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i> <span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i> <span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user-shield"></i> <span id="user-name">管理员</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <div class="admin-container admin-menu-container">
+            <h2><i class="fas fa-user-shield"></i> 管理员首页</h2>
+            <div class="admin-menu-info">
+                <p id="admin-welcome">欢迎使用管理端</p>
+            </div>
+            <div class="admin-menu-actions">
+                <button class="menu-item admin-menu-item" onclick="window.location.href='admin.html'">
+                    <i class="fas fa-cog fa-2x"></i>
+                    <span>进入管理后台</span>
+                    <small>用户/图书检索、代录借还、重置密码等</small>
+                </button>
+                <button class="menu-item admin-menu-item" onclick="window.location.href='../user/search.html'">
+                    <i class="fas fa-search fa-2x"></i>
+                    <span>图书检索</span>
+                    <small>按书名、作者、ISBN 检索馆藏</small>
+                </button>
+                <button class="menu-item admin-menu-item" onclick="window.location.href='../user/navigation.html'">
+                    <i class="fas fa-map-marked-alt fa-2x"></i>
+                    <span>导航指引</span>
+                    <small>查找书籍位置与楼层导览</small>
+                </button>
+                <button class="btn-secondary btn-help" onclick="window.location.href='help.html'">
+                    <i class="fas fa-question-circle"></i> 帮助
+                </button>
+                <button class="btn-secondary btn-back" onclick="window.location.href='../user/main-menu.html'">
+                    <i class="fas fa-user"></i> 以用户身份访问
+                </button>
+                <button class="btn-secondary btn-logout" onclick="adminLogout()">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/system.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!AppState.currentUser || AppState.currentUser.role !== 'admin') {
+                window.location.href = '../user/login.html';
+                return;
+            }
+            var welcome = document.getElementById('admin-welcome');
+            if (welcome) welcome.textContent = '欢迎，' + AppState.currentUser.name;
+            updateTime();
+            setInterval(updateTime, 60000);
+            if (typeof updateUserStatus === 'function') updateUserStatus();
+        });
+        function adminLogout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            if (typeof showNotification === 'function') showNotification('已退出登录', 'info');
+            window.location.href = '../../index.html';
+        }
+    </script>
+</body>
+</html>

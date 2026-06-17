@@ -1,0 +1,31 @@
+/* 自助借还说明页 - 大号提醒与流程说明 */
+
+.self-service-notice {
+    text-align: center;
+    padding: var(--spacing-xl);
+    margin: var(--spacing-lg) 0;
+    background: linear-gradient(135deg, var(--primary-color), #357ABD);
+    color: var(--text-on-primary);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.self-service-notice i {
+    font-size: var(--font-xxl);
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.self-service-notice p {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+    .self-service-notice p {
+        font-size: 1.15rem;
+    }
+}

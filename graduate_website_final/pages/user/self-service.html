@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>自助借还 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/help.css">
+    <link rel="stylesheet" href="../../css/self-service.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left">
+            <span class="wifi-status"><i class="fas fa-wifi"></i> <span id="wifi-status-text">已连接</span></span>
+            <span class="battery-status"><i class="fas fa-battery-full"></i> <span id="battery-level">100%</span></span>
+        </div>
+        <div class="status-center"><span id="current-time">10:50</span></div>
+        <div class="status-right">
+            <span class="user-status"><i class="fas fa-user"></i> <span id="user-name">未登录</span></span>
+        </div>
+    </header>
+
+    <main id="app">
+        <div class="help-container self-service-container">
+            <h2><i class="fas fa-exchange-alt"></i> 自助借还</h2>
+
+            <div class="self-service-notice">
+                <i class="fas fa-info-circle"></i>
+                <p>请到自助借阅机前进行操作</p>
+            </div>
+
+            <div class="help-sections">
+                <div class="help-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> 自助借阅机位置</h3>
+                    <div class="help-content">
+                        <p>一楼大厅入口处、二楼阅览区东侧各设有自助借阅机，支持借书与还书。请根据馆内指引牌前往。</p>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3><i class="fas fa-book-reader"></i> 借书流程</h3>
+                    <div class="help-content">
+                        <ol>
+                            <li>在自助借阅机前选择「借书」</li>
+                            <li>刷校园卡或输入学号/工号识别身份</li>
+                            <li>将书籍条形码对准扫描区扫描</li>
+                            <li>确认借阅信息无误后完成借书</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3><i class="fas fa-book-return"></i> 还书流程</h3>
+                    <div class="help-content">
+                        <ol>
+                            <li>在自助借阅机前选择「还书」</li>
+                            <li>将书籍放入还书口或对准扫描区扫描条形码</li>
+                            <li>等待系统确认归还成功</li>
+                            <li>取回凭条（如有）</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3><i class="fas fa-user-tie"></i> 人工服务</h3>
+                    <div class="help-content">
+                        <p>若自助借阅机故障或操作有疑问，请到<strong>一楼服务台</strong>找图书馆管理员进行人工借还书。服务时间与开馆时间一致。</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-secondary btn-back" onclick="window.location.href=typeof getBackMenuUrl==='function'?getBackMenuUrl():'main-menu.html'">
+                <i class="fas fa-arrow-left"></i> 返回菜单
+            </button>
+        </div>
+    </main>
+
+    <script src="../../js/app-state.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/system.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserStatus();
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+    </script>
+</body>
+</html>

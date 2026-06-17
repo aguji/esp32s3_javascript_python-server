@@ -1,0 +1,101 @@
+/* 智能图书馆导览机器人 - 帮助页面样式 */
+
+/* ===== 帮助页面 ===== */
+.help-sections {
+    margin: var(--spacing-lg) 0;
+}
+
+.help-section {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.help-section h3 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.help-content {
+    padding-left: var(--spacing-md);
+}
+
+.help-content h4 {
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+    color: var(--dark-text);
+}
+
+.help-content ol {
+    margin-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.help-content li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.font-size-controls {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}

@@ -1,0 +1,42 @@
+dependencies:
+  espressif/esp_lcd_touch:
+    dependencies: []
+    source:
+      path: D:\camera_made\example\graduated_design\ESP32-S3-Touch-LCD-7-Demo\ESP-IDF\08_lvgl_Porting\components\espressif__esp_lcd_touch
+      type: local
+    version: 1.1.2
+  espressif/esp_lcd_touch_gt911:
+    dependencies: []
+    source:
+      path: D:\camera_made\example\graduated_design\ESP32-S3-Touch-LCD-7-Demo\ESP-IDF\08_lvgl_Porting\components\espressif__esp_lcd_touch_gt911
+      type: local
+    version: 1.1.1~1
+  garag/esp-idf-pn532:
+    component_hash: 72354942a2736b1bb95b23012c142e036732885af7b2a041484f1920cd835a8b
+    dependencies:
+    - name: idf
+      require: private
+      version: ^5.2
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 0.2.0
+  idf:
+    source:
+      type: idf
+    version: 5.5.2
+  lvgl/lvgl:
+    dependencies: []
+    source:
+      path: D:\camera_made\example\graduated_design\ESP32-S3-Touch-LCD-7-Demo\ESP-IDF\08_lvgl_Porting\components\lvgl__lvgl
+      type: local
+    version: 8.4.0
+direct_dependencies:
+- espressif/esp_lcd_touch
+- espressif/esp_lcd_touch_gt911
+- garag/esp-idf-pn532
+- idf
+- lvgl/lvgl
+manifest_hash: 2d9c0b8f0a90d29018d3af75550eca8183835dc618bae2cb9ef7dd9a0b3273d2
+target: esp32s3
+version: 2.0.0

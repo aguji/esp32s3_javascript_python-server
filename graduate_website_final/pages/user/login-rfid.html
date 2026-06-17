@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RFID刷卡登录 - 智能图书馆导览机器人</title>
+    <link rel="stylesheet" href="../../css/base.css">
+    <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+    <header class="status-bar">
+        <div class="status-left"><span>已连接</span></div>
+        <div class="status-center"><span id="current-time"></span></div>
+        <div class="status-right"><span>未登录</span></div>
+    </header>
+
+    <main id="app">
+        <div class="login-container login-single-page">
+            <h2><span class="fas">◆</span> RFID刷卡登录</h2>
+            <div class="rfid-notice-box">
+                <div class="notice-icon">ℹ️</div>
+                <div class="notice-title">提示</div>
+                <div class="notice-content">
+                    <p>RFID刷卡登录功能需要在<strong>自助借阅机</strong>前操作。</p>
+                    <p>请前往图书馆一楼的自助借阅设备，使用校园卡刷卡登录。</p>
+                </div>
+                <div class="notice-icon-bottom">🏧</div>
+            </div>
+            <div class="rfid-icon-wrap rfid-disabled">
+                <span class="fas" style="font-size: 4rem; opacity: 0.3;">◆</span>
+            </div>
+            <button type="button" class="btn-secondary btn-large" onclick="window.location.href='login.html'">
+                ← 返回登录方式选择
+            </button>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            var el = document.getElementById('current-time');
+            if (el) el.textContent = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false });
+        })();
+    </script>
+</body>
+</html>
